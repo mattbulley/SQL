@@ -37,10 +37,27 @@ select o.name, count(r.rating) as ratings, avg(r.rating) as cnt, g.genre_id from
 /*FINDS THE MOST RATED MOVIES*/
 select g.movie_id, count(r.rating) as numberOfReviews from ratings r join genres_movies g on r.movie_id = g.movie_id group by g.movie_id order by numberOfReviews desc limit 10;
 
+/*FINDS THE MOST Reviewed MOVIES by title*/
+SELECT distinct u.title, u.id, u2.numberOfReviews
+FROM movies u
+JOIN genres_movies gm ON gm.movie_id = u.id join (select g.movie_id, count(r.rating) as numberOfReviews  from ratings r join genres_movies g on r.movie_id = g.movie_id group by g.movie_id order by  numberOfReviews desc
+) as u2 on u.id = u2.movie_id order by u2.numberOfReviews desc limit 10;
+
 /*FINDS THE HIGHEST RATED MOVIE WITH MORE THAN TEN REVIEWS*/
 select g.movie_id, count(r.rating) as numberOfReviews, avg(r.rating) as rating from ratings r join genres_movies g on r.movie_id = g.movie_id group by g.movie_id having count(r.rating) >= 10 order by rating desc limit 10;
+
+/*FINDS THE HIGHEST RATED MOVIE WITH MORE THAN TEN REVIEWS with movie title*/
+SELECT distinct u.title, u.id, u2.numberOfReviews, u2.rating
+FROM movies u
+JOIN genres_movies gm ON gm.movie_id = u.id join (select g.movie_id, count(r.rating) as numberOfReviews, avg(r.rating) as rating from ratings r join genres_movies g on r.movie_id = g.movie_id group by g.movie_id having count(r.rating) >= 10 order by rating desc
+) as u2 on u.id = u2.movie_id order by u2.rating desc limit 10;
+
 
 /*FINDS THE LOWEST RATED MOVIE WITH MORE THAN TEN REVIEWS*/
 select g.movie_id, count(r.rating) as numberOfReviews, avg(r.rating) as rating from ratings r join genres_movies g on r.movie_id = g.movie_id group by g.movie_id having count(r.rating) >= 10 order by rating desc limit 10;
 
-
+/*FINDS THE LOWEST RATED MOVIE WITH MORE THAN TEN REVIEWS with movie title*/
+SELECT distinct u.title, u.id, u2.numberOfReviews, u2.rating
+FROM movies u
+JOIN genres_movies gm ON gm.movie_id = u.id join (select g.movie_id, count(r.rating) as numberOfReviews, avg(r.rating) as rating from ratings r join genres_movies g on r.movie_id = g.movie_id group by g.movie_id having count(r.rating) >= 10 order by rating desc
+) as u2 on u.id = u2.movie_id order by u2.rating asc limit 10;
