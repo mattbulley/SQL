@@ -61,3 +61,32 @@ SELECT distinct u.title, u.id, u2.numberOfReviews, u2.rating
 FROM movies u
 JOIN genres_movies gm ON gm.movie_id = u.id join (select g.movie_id, count(r.rating) as numberOfReviews, avg(r.rating) as rating from ratings r join genres_movies g on r.movie_id = g.movie_id group by g.movie_id having count(r.rating) >= 10 order by rating desc
 ) as u2 on u.id = u2.movie_id order by u2.rating asc limit 10;
+
+
+
+/*VIEWS*/
+
+CREATE OR REPLACE VIEW topRated(Title, ID, NumberOfReviews, Rating) AS SELECT distinct u.title, u.id, u2.numberOfReviews, u2.rating
+FROM movies u
+JOIN genres_movies gm ON gm.movie_id = u.id join (select g.movie_id, count(r.rating) as numberOfReviews, avg(r.rating) as rating from ratings r join genres_movies g on r.movie_id = g.movie_id group by g.movie_id having count(r.rating) >= 10 order by rating desc
+) as u2 on u.id = u2.movie_id order by u2.rating desc limit 10;
+
+select * from topRated;
+
+
+/*ADMINISTRATION*/
+
+CREATE USER 'my_user'@'localhost' IDENTIFIED BY 'my_password';
+
+GRANT All PRIVILEGES ON movielens.* TO 'my_user'@'localhost';
+GRANT SHOW DATABASES ON movielens TO 'my_user'@'localhost';
+
+
+
+
+
+
+
+
+
+
