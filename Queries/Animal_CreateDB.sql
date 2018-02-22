@@ -58,6 +58,26 @@ CREATE TABLE IF NOT EXISTS `AnimalAdoptionService`.`LengthOfStay` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `AnimalAdoptionService`.`Criteria`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `AnimalAdoptionService`.`Criteria` (
+  `Animals_animalID` BIGINT(20) NOT NULL,
+  `species` VARCHAR(255) NOT NULL,
+  `breed` VARCHAR(255) NOT NULL,
+  `age` BIGINT(20) NOT NULL,
+  `colour` VARCHAR(255) NOT NULL,
+  `gender` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`Animals_animalID`),
+  INDEX `fk_Criteria_Animals1_idx` (`Animals_animalID` ASC),
+  CONSTRAINT `fk_Criteria_Animals1`
+    FOREIGN KEY (`Animals_animalID`)
+    REFERENCES `AnimalAdoptionService`.`Animals` (`animalID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
