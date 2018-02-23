@@ -31,9 +31,25 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `BookPublishingCompany`.`Earnings` (
   `Authors_authorsID` BIGINT(10) NOT NULL,
   `earnings` BIGINT(20) NULL DEFAULT 0,
-  PRIMARY KEY (`Authors_authorsID`),
   INDEX `fk_Earnings_Authors_idx` (`Authors_authorsID` ASC),
+  PRIMARY KEY (`Authors_authorsID`),
   CONSTRAINT `fk_Earnings_Authors`
+    FOREIGN KEY (`Authors_authorsID`)
+    REFERENCES `BookPublishingCompany`.`Authors` (`authorsID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `BookPublishingCompany`.`Genres`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `BookPublishingCompany`.`Genres` (
+  `Authors_authorsID` BIGINT(10) NOT NULL,
+  `genre` VARCHAR(255) NULL DEFAULT 'null',
+  `rating` FLOAT NULL DEFAULT NULL,
+  INDEX `fk_Genres_Authors1_idx` (`Authors_authorsID` ASC),
+  CONSTRAINT `fk_Genres_Authors1`
     FOREIGN KEY (`Authors_authorsID`)
     REFERENCES `BookPublishingCompany`.`Authors` (`authorsID`)
     ON DELETE NO ACTION
